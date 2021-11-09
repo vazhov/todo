@@ -11,7 +11,6 @@ function App() {
   const [updater, setUpdater] = useState(false)
 
   useEffect(() => {
-    console.log('dsf');
     fetch(`${apiUrl}/posts?_limit=3`)
       .then((res) => {
         if (  res.status >= 200 && res.status < 300) {
@@ -62,7 +61,6 @@ function App() {
       setUpdater(false)
       repos.id = repos.id + randNum
       repos.checked = false
-      console.log(repos);
       setTodos([...todos, repos])
     });
 }

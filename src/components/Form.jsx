@@ -9,7 +9,6 @@ const Forms = function ({ sumbitForm, updater }) {
         setName(event.target.value);
     }
     function submit (e) {
-        console.log(name !== '');
         if (name !== '') {
             sumbitForm(name)
             setName('');
