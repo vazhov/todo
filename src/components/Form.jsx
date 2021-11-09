@@ -2,21 +2,25 @@ import React, { useState } from 'react'
 import { Button, Form, Input, Spin } from 'antd';
 
 const Forms = function ({ sumbitForm, updater }) {
-    const formRef = React.createRef();
+    const [form] = Form.useForm();
     const [name, setName] = useState('')
 
     function handleChange (event) {
         setName(event.target.value);
     }
-    function submit () {
-        sumbitForm(name)
-        setName('');
+    function submit (e) {
+        console.log(name !== '');
+        if (name !== '') {
+            sumbitForm(name)
+            setName('');
+            form.resetFields();
+        }
     }
 
     return (
         <div className="form" >
             <h1>Добавьте новую запись</h1>
-            <Form onFinish={submit} ref={formRef} name="control-ref">
+            <Form form={form} onFinish={submit} name="control-ref">
                 <Form.Item
                     name="name"
                     onChange={handleChange}

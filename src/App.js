@@ -11,9 +11,10 @@ function App() {
   const [updater, setUpdater] = useState(false)
 
   useEffect(() => {
-    fetch(`${apiUrl}/posts?_limit=5`)
+    console.log('dsf');
+    fetch(`${apiUrl}/posts?_limit=3`)
       .then((res) => {
-        if (res.status >= 200 && res.status < 300) {
+        if (  res.status >= 200 && res.status < 300) {
           return res;
         } else {
           let error = new Error(res.statusText);
@@ -27,9 +28,8 @@ function App() {
         repos.map((item) => item['checked'] = false)
         setLoader(true)
         setTodos(repos)
-      }
-    );
-  }, []);
+      });
+  }, [apiUrl]);
 
   const handleChange = (value) => {
     setTodos(todos.filter(item => item.id !== value))
@@ -47,23 +47,25 @@ function App() {
       body: JSON.stringify({title: item}),
       headers: { "Content-type": "application/json; charset=UTF-8" }
     })
-      .then((res) => {
-        if (res.status >= 200 && res.status < 300) {
-          return res;
-        } else {
-          let error = new Error(res.statusText);
-          error.response = res;
-          alert('Ошибка запроса')
-          throw error
-        }
-      })
-      .then((res) => res.json())
-      .then((repos) => {
-        setUpdater(false)
-        repos.id = repos.id + randNum
-        setTodos([repos, ...todos])
-      });
-  }
+    .then((res) => {
+      if (res.status >= 200 && res.status < 300) {
+        return res;
+      } else {
+        let error = new Error(res.statusText);
+        error.response = res;
+        alert('Ошибка запроса')
+        throw error
+      }
+    })
+    .then((res) => res.json())
+    .then((repos) => {
+      setUpdater(false)
+      repos.id = repos.id + randNum
+      repos.checked = false
+      console.log(repos);
+      setTodos([...todos, repos])
+    });
+}
 
   return (
     <div className="App">

@@ -15,7 +15,7 @@ const ListBoard = ({ todos, deleteTodo, updateCheckbox }) => {
                 size="small"    
                 bordered
                 dataSource={todos}
-                renderItem={(item, index) => (
+                renderItem={item => (
                     <ListItem
                         data={item}
                         onClick={handleChange}
